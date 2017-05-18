@@ -15,7 +15,7 @@ $headers = [
   'Authorization:'.$auth,
   'X-API-Version: 2'
 ];
-
+$time_start = microtime(true);
 for($i=0;$i<=344;$i++){
 
   $queryString = 'page='.$i;
@@ -51,9 +51,13 @@ for($i=0;$i<=344;$i++){
   }
 
     if(isset($match)){
+      $time_end = microtime(true);
+      $execution_time = ($time_end - $time_start)/60;
       echo $match;
-      echo "<br>";
+      echo "<br><br>";
       echo $match_email;
+      echo "<br><br>";
+      echo $execution_time;
       break;
     }
   }
@@ -63,6 +67,7 @@ if(!isset($match)){echo "Not Found";};
 //uncomment to output HTTP Status (for debugging, usually)
 //echo "HTTP Status:".$http_status;
 }
+
 ?>
 <form action="#" method="POST">
   <input type="text" placeholder="Big Boy Auth" name="big_boy_auth" id="big_boy_auth" value="<?php if(isset($auth)){echo $auth;};?>">
