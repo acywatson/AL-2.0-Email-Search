@@ -7,6 +7,7 @@ $password = $_POST['password'];
 $device_id = $_POST['device_id'];
 };
 //if you set these constants, they will override the above POSTED variables.
+$pre_auth = '6b7998db49cfe3e3e83aaa5a3a88d4b2d34e92c7;e7cd433a66cf708fdc723fce42e50a0c4088d3e6;1493392689;e574512d-1faf-4687-8bba-05c84d636f87;P100Y';
 
 $headers = [
   'Authorization:'.$pre_auth,
@@ -16,7 +17,7 @@ $headers = [
 
 $body = [
   'email_address' => $email,
-  'password' => $password
+  'password' => $password,
   'user_device_id' => $device_id
 ];
 

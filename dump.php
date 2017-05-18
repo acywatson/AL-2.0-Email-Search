@@ -1,13 +1,13 @@
 <?php
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
-
+$_POST['submitted'] = true;
 if(isset($_POST['submitted'])){
 $auth = $_POST['big_boy_auth'];
-$search_term = trim($_POST['search_term']);
+//$search_term = trim($_POST['search_term']);
 
 //set auth and search if you want to hardcode it each time.
-//$auth = '06425ca2a9974a938c3b0207496f4e3f1ab38a9b;7cc2a3134bc8a4f8f4e893806140c59811ed4372;1495038277;e574512d-1faf-4687-8bba-05c84d636f87;PT30M';
+$auth = '56ac09e7e9ac3e7d3494aa8d1af7d84b663cc65f;eac4c9fe4fd3b099bfaeccbdcc47bad0eeb8e583;1495144842;e574512d-1faf-4687-8bba-05c84d636f87;PT30M';
 //$search_term = "jsanders@avantlink.com";
 
 //set headers
@@ -16,6 +16,7 @@ $headers = [
   'X-API-Version: 2'
 ];
 $time_start = microtime(true);
+$output = [];
 for($i=0;$i<=344;$i++){
 
   $queryString = 'page='.$i;
@@ -39,34 +40,15 @@ for($i=0;$i<=344;$i++){
     echo $set->error;
     break;
   }
-  $match;
-  $match_email;
-  if(isset($set->items)){
-  $items = $set->items;
-  foreach ($items as $item) {
-    if ($item->email_address === $search_term){
-      $match = $item->user_id;
-      $match_email = $item->email_address;
-    };
+    array_push($output, $result);
   }
-
-    if(isset($match)){
-      $time_end = microtime(true);
-      $execution_time = ($time_end - $time_start)/60;
-      echo $match;
-      echo "<br><br>";
-      echo $match_email;
-      echo "<br><br>";
-      echo $execution_time;
-      break;
-    }
-  }
+  $string_output = implode($output);
+  file_put_contents('dump', $string_output);
 }
 
 if(!isset($match)){echo "Not Found";};
 //uncomment to output HTTP Status (for debugging, usually)
-//echo "HTTP Status:".$http_status;
-}
+//echo "HTTP Status:".$http_status;s
 
 ?>
 <form action="#" method="POST">
